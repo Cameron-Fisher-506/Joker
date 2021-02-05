@@ -2,6 +2,12 @@
     <string name="app_name">Joker</string>
 
     <string name="dummy_text">dummy</string>
-
+    <string name="dummy_text_long">When Chuck Norris is wrong,he is right,even when he turns left. When Chuck Norris is wrong,he is right,even when he turns left. When Chuck Norris is wrong,he is right,even when he turns left.</string>
+    <string name="notification">Notification</string>
+    <string name="more">More</string>
+    <string name="created_at">Created At:</string>
+    <string name="updated_at">Updated At:</string>
+    <string name="url">URL:</string>
+    <string name="categories">Categories:</string>
 
 </resources>

@@ -5,9 +5,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application  android:allowBackup="true"
-        android:icon="@drawable/ic_mood_black_24dp"
+        android:icon="@drawable/chucknorris"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/ic_mood_black_24dp"
+        android:roundIcon="@drawable/chucknorris"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
