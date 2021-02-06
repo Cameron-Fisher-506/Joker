@@ -9,5 +9,8 @@
     <string name="updated_at">Updated At:</string>
     <string name="url">URL:</string>
     <string name="categories">Categories:</string>
+    <string name="search">Search</string>
+    <string name="value">Value</string>
+    <string name="id">id</string>
 
 </resources>

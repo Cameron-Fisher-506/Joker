@@ -24,6 +24,8 @@ import za.co.joker.utils.DTUtils;
 
 public class JokeFrag extends Fragment
 {
+    private TextView txtNotify;
+
     private ImageView imgCoverImage;
     private TextView txtValue;
     private TextView txtCreatedAt;
@@ -56,11 +58,21 @@ public class JokeFrag extends Fragment
             }
         }
 
+        Boolean isOffline = getArguments().getBoolean("isOffline");
+        if(isOffline != null && isOffline)
+        {
+            this.txtNotify.setText("No connection");
+            this.txtNotify.setVisibility(View.VISIBLE);
+        }
+
         return view;
     }
 
     private void wireUI(View view)
     {
+        this.txtNotify = (TextView) view.findViewById(R.id.txtNotify);
+        this.txtNotify.setVisibility(View.GONE);
+
         this.imgCoverImage = (ImageView) view.findViewById(R.id.imgCoverImage);
         this.txtValue = (TextView) view.findViewById(R.id.txtValue);
         this.txtCreatedAt = (TextView) view.findViewById(R.id.txtCreatedAt);

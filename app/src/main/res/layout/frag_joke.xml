@@ -5,13 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <include
+        android:id="@+id/notify"
+        layout="@layout/notification_bar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+
     <ImageView
         android:id="@+id/imgCoverImage"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:contentDescription="@string/dummy_text"
         android:src="@drawable/chucknorris"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +33,7 @@
         android:text="@string/dummy_text_long"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:textStyle="bold"
         android:textSize="20dp"
         android:textColor="@color/darkblue"
@@ -36,7 +45,7 @@
         android:id="@+id/txtCreatedAt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:paddingStart="20dp"
         android:text="@string/created_at"
         android:textStyle="bold"

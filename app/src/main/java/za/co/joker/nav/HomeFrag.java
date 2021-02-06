@@ -25,6 +25,8 @@ import za.co.joker.adapters.JokeAdapter;
 import za.co.joker.objs.Joke;
 import za.co.joker.utils.ConstantUtils;
 import za.co.joker.utils.DTUtils;
+import za.co.joker.utils.FlagUtils;
+import za.co.joker.utils.FragmentUtils;
 import za.co.joker.utils.GeneralUtils;
 import za.co.joker.utils.StringUtils;
 import za.co.joker.utils.WSCallsUtils;
@@ -96,6 +98,7 @@ public class HomeFrag extends Fragment implements WSCallsUtilsTaskCaller
     {
         this.txtNotify = (TextView) view.findViewById(R.id.txtNotify);
         this.txtNotify.setVisibility(View.GONE);
+        FlagUtils.isOffline = false;
     }
 
     @Override
@@ -108,6 +111,7 @@ public class HomeFrag extends Fragment implements WSCallsUtilsTaskCaller
     {
         if(isOffline)
         {
+            this.txtNotify.setText("No connection");
             this.txtNotify.setVisibility(View.VISIBLE);
         }else
         {
@@ -118,28 +122,50 @@ public class HomeFrag extends Fragment implements WSCallsUtilsTaskCaller
         {
             if(reqCode == REQ_CODE_GET_RANDOM_JOKE)
             {
-                try
+                if(!isOffline)
                 {
-                    JSONObject jsonObject = new JSONObject(response);
-                    Joke joke = new Joke();
-                    joke.populate(jsonObject);
+                    try
+                    {
+                        JSONObject jsonObject = new JSONObject(response);
+                        Joke joke = new Joke();
+                        joke.populate(jsonObject);
 
-                    this.jokes.add(joke);
-                    Collections.sort(jokes);
+                        this.jokes.add(joke);
+                        Collections.sort(jokes);
 
-                    this.jokeAdapter = new JokeAdapter((MainActivity)getActivity(), jokes);
-                    this.recyclerView.setAdapter(this.jokeAdapter);
-                }catch(JSONException e)
+                        this.jokeAdapter = new JokeAdapter((MainActivity)getActivity(), jokes);
+                        this.recyclerView.setAdapter(this.jokeAdapter);
+                    }catch(JSONException e)
+                    {
+                        Log.e(ConstantUtils.TAG, "\nError: " + e.getMessage()
+                                + "\nMethod: HomeFrag - taskCompleted"
+                                + "\nCreatedTime: " + DTUtils.getCurrentDateTime());
+                    }
+                }else
                 {
-                    Log.e(ConstantUtils.TAG, "\nError: " + e.getMessage()
-                            + "\nMethod: HomeFrag - taskCompleted"
-                            + "\nCreatedTime: " + DTUtils.getCurrentDateTime());
+                    if(!FlagUtils.isOffline)
+                    {
+                        FlagUtils.isOffline = true;
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("joke", response);
+                        bundle.putBoolean("isOffline", true);
+
+                        JokeFrag jokeFrag = new JokeFrag();
+                        jokeFrag.setArguments(bundle);
+
+                        FragmentUtils.startFragment(((MainActivity)getActivity()).getSupportFragmentManager(), jokeFrag, R.id.fragContainer, ((MainActivity)getActivity()).getSupportActionBar(), "Chuck Norris", true, false, true, null);
+
+                    }
                 }
+
 
             }
         }else
         {
-            //offline
+            //No connection
+            GeneralUtils.makeToast(getContext(), "No connection");
+
         }
 
     }
