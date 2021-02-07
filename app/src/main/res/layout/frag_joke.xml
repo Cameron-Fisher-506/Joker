@@ -20,7 +20,7 @@
         android:layout_height="150dp"
         android:contentDescription="@string/dummy_text"
         android:src="@drawable/chucknorris"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,9 +33,9 @@
         android:text="@string/dummy_text_long"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:textStyle="bold"
-        android:textSize="20dp"
+        android:textSize="16sp"
         android:textColor="@color/darkblue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +45,7 @@
         android:id="@+id/txtCreatedAt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         android:paddingStart="20dp"
         android:text="@string/created_at"
         android:textStyle="bold"
@@ -59,7 +59,7 @@
         android:id="@+id/txtUpdatedAt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:paddingStart="20dp"
         android:text="@string/updated_at"
         android:textStyle="bold"
@@ -69,12 +69,40 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtCreatedAt" />
 
+    <TextView
+        android:id="@+id/txtId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:paddingStart="20dp"
+        android:text="@string/id_joke"
+        android:textStyle="bold"
+        android:textColor="@color/darkblue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtUpdatedAt" />
+
+    <TextView
+        android:id="@+id/txtUrl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:paddingStart="20dp"
+        android:text="@string/url"
+        android:textStyle="bold"
+        android:textColor="@color/darkblue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtId" />
+
 
     <TextView
         android:id="@+id/txtCategories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:paddingStart="20dp"
         android:text="@string/categories"
         android:textStyle="bold"
@@ -82,7 +110,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.046"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtUpdatedAt" />
+        app:layout_constraintTop_toBottomOf="@+id/txtUrl" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

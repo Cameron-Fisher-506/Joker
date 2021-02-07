@@ -1,7 +1,9 @@
 package za.co.joker.utils;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.ProgressBar;
 
 import org.json.JSONObject;
 
@@ -11,10 +13,12 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import za.co.joker.R;
+
 public class WSCallsUtils extends AsyncTask<String, Void, String>
 {
     private WSCallsUtilsTaskCaller wsCallsUtilsTaskCaller;
-
+    private ProgressDialog progressDialog;
     private int reqCode;
 
     private WSCallsUtils(WSCallsUtilsTaskCaller wsCallsUtilsTaskCaller, int reqCode)
@@ -73,6 +77,11 @@ public class WSCallsUtils extends AsyncTask<String, Void, String>
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+
+        this.progressDialog = new ProgressDialog(this.wsCallsUtilsTaskCaller.getCallingContext());
+        this.progressDialog.show();
+        this.progressDialog.setContentView(R.layout.progress_dialog);
+        this.progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
     }
 
@@ -177,6 +186,11 @@ public class WSCallsUtils extends AsyncTask<String, Void, String>
             {
                 //What happens if s is null
                 isOffline = true;
+            }
+
+            if(this.progressDialog != null)
+            {
+                this.progressDialog.dismiss();
             }
 
             this.wsCallsUtilsTaskCaller.taskCompleted(response, this.reqCode, isOffline);

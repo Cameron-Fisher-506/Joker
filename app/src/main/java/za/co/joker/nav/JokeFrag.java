@@ -30,6 +30,8 @@ public class JokeFrag extends Fragment
     private TextView txtValue;
     private TextView txtCreatedAt;
     private TextView txtUpdatedAt;
+    private TextView txtId;
+    private TextView txtUrl;
     private TextView txtCategories;
 
 
@@ -77,6 +79,8 @@ public class JokeFrag extends Fragment
         this.txtValue = (TextView) view.findViewById(R.id.txtValue);
         this.txtCreatedAt = (TextView) view.findViewById(R.id.txtCreatedAt);
         this.txtUpdatedAt = (TextView) view.findViewById(R.id.txtUpdatedAt);
+        this.txtId = (TextView) view.findViewById(R.id.txtId);
+        this.txtUrl = (TextView) view.findViewById(R.id.txtUrl);
         this.txtCategories =(TextView) view.findViewById(R.id.txtCategories);
     }
 
@@ -118,6 +122,22 @@ public class JokeFrag extends Fragment
                 this.txtUpdatedAt.append(" --");
             }
 
+            if(joke.getId() != null)
+            {
+                this.txtId.append(" " + joke.getId());
+            }else
+            {
+                this.txtId.append(" --");
+            }
+
+            if(joke.getUrl() != null)
+            {
+                this.txtUrl.append(" " + joke.getUrl());
+            }else
+            {
+                this.txtUrl.append(" --");
+            }
+
             if(joke.getCategories() != null && joke.getCategories().size() > 0)
             {
                 this.txtCategories.setText("");
@@ -134,6 +154,8 @@ public class JokeFrag extends Fragment
             this.txtValue.setText("--");
             this.txtCreatedAt.append(" --");
             this.txtUpdatedAt.append(" --");
+            this.txtId.append(" --");
+            this.txtUrl.append(" --");
         }
     }
 }

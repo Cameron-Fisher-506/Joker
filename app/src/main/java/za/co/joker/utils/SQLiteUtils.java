@@ -7,6 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import za.co.joker.objs.Joke;
+
 public class SQLiteUtils extends SQLiteOpenHelper
 {
     
@@ -15,6 +20,7 @@ public class SQLiteUtils extends SQLiteOpenHelper
     
     //TABLES
     private static final String RESPONSE_TABLE = "response";
+    private static final String FAVOURITES_TABLE = "favourites";
     
     public SQLiteUtils(Context context)
     {
@@ -25,6 +31,7 @@ public class SQLiteUtils extends SQLiteOpenHelper
     public void onCreate(SQLiteDatabase db)
     {
         createResponseTable();
+        createFavouritesTable();
     }
     
     @Override
@@ -70,6 +77,150 @@ public class SQLiteUtils extends SQLiteOpenHelper
                 dbWrite = null;
             }
         }
+    }
+
+    private void createFavouritesTable()
+    {
+        SQLiteDatabase dbWrite = null;
+
+        try
+        {
+            String request = "CREATE TABLE IF NOT EXISTS " +FAVOURITES_TABLE+"(" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "value VARCHAR(1000)," +
+                    "url VARCHAR(1000)," +
+                    "updatedAt VARCHAR(1000)," +
+                    "idJoke VARCHAR(1000)," +
+                    "urlIcon VARCHAR(1000)," +
+                    "createdAt VARCHAR(1000)" +
+                    ")";
+
+            dbWrite = getWritableDatabase();
+
+            if(dbWrite != null)
+            {
+                dbWrite.execSQL(request);
+            }
+
+        }catch(Exception e)
+        {
+            String message = "\n\nError Message: " + e.getMessage() +
+                    "\nClass: SQLiteUtils" +
+                    "\nMethod: createFavouritesTable" +
+                    "\nCreatedTime: " + DTUtils.getCurrentDateTime();
+            Log.d(ConstantUtils.TAG, message);
+        }finally
+        {
+            if(dbWrite != null)
+            {
+                dbWrite.close();
+                dbWrite = null;
+            }
+        }
+    }
+
+    public void cacheFavourites(String value, String url, String updatedAt, String id, String urlIcon, String createdAt)
+    {
+        createFavouritesTable();
+
+        SQLiteDatabase dbWrite = null;
+        try
+        {
+            dbWrite = this.getWritableDatabase();
+
+            if(dbWrite != null && value != null && url != null && updatedAt != null && id != null && urlIcon != null && createdAt != null)
+            {
+                ContentValues contentValues = new ContentValues();
+
+                contentValues.put("value", value);
+                contentValues.put("url", url);
+                contentValues.put("updatedAt", updatedAt);
+                contentValues.put("idJoke", id);
+                contentValues.put("urlIcon", urlIcon);
+                contentValues.put("createdAt", createdAt);
+
+                dbWrite.insert(FAVOURITES_TABLE, null,contentValues);
+            }
+
+        }catch(Exception e)
+        {
+            String message = "\n\nError Message: " + e.getMessage() +
+                    "\nClass: SQLiteUtils" +
+                    "\nMethod: cacheFavourites" +
+                    "\nCreatedTime: " + DTUtils.getCurrentDateTime();
+            Log.d(ConstantUtils.TAG, message);
+        }finally
+        {
+
+            if(dbWrite != null)
+            {
+                dbWrite.close();
+                dbWrite = null;
+            }
+        }
+    }
+
+    public List<Joke> getAllFavourites()
+    {
+        List<Joke> toReturn = null;
+
+        createFavouritesTable();
+
+        SQLiteDatabase dbReader = null;
+        Cursor cursor = null;
+
+        try
+        {
+            dbReader = getReadableDatabase();
+
+            if(dbReader != null)
+            {
+                String query = "SELECT *" + " FROM " + FAVOURITES_TABLE + ";";
+
+                cursor = dbReader.rawQuery(query, null, null);
+
+                if(cursor != null && cursor.getCount() > 0)
+                {
+                    toReturn = new ArrayList<Joke>();
+                    while(cursor.moveToNext())
+                    {
+                        Joke joke = new Joke();
+                        joke.setValue(cursor.getString(1));
+                        joke.setUrl(cursor.getString(2));
+                        joke.setUpdatedAt(cursor.getString(3));
+                        joke.setId(cursor.getString(4));
+                        joke.setUrlIcon(cursor.getString(5));
+                        joke.setCreatedAt(cursor.getString(6));
+
+                        toReturn.add(joke);
+                    }
+                }
+            }
+        }catch(Exception e)
+        {
+            String message = "\n\nError Message: " + e.getMessage() +
+                    "\nClass: SQLiteUtils" +
+                    "\nMethod: getAllFavourites" +
+                    "\nCreatedTime: " + DTUtils.getCurrentDateTime();
+            Log.d(ConstantUtils.TAG, message);
+        }finally
+        {
+            if(dbReader != null)
+            {
+                dbReader.close();
+                dbReader = null;
+            }
+
+            if(cursor != null)
+            {
+                cursor.close();
+                cursor = null;
+            }
+        }
+
+
+        return toReturn;
+
     }
 
     public void cacheResponse(String url, String response, String createdTime)

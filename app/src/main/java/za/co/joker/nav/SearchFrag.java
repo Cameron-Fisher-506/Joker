@@ -31,6 +31,7 @@ import za.co.joker.utils.ConstantUtils;
 import za.co.joker.utils.DTUtils;
 import za.co.joker.utils.FragmentUtils;
 import za.co.joker.utils.GeneralUtils;
+import za.co.joker.utils.SQLiteUtils;
 import za.co.joker.utils.StringUtils;
 import za.co.joker.utils.WSCallsUtils;
 import za.co.joker.utils.WSCallsUtilsTaskCaller;
@@ -46,11 +47,15 @@ public class SearchFrag extends Fragment implements WSCallsUtilsTaskCaller
     private JokeAdapter jokeAdapter;
     private List<Joke> jokes;
 
+    private SQLiteUtils sqLiteUtils;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_search, container, false);
+
+        this.sqLiteUtils = new SQLiteUtils(getContext());
 
         wireUI(view);
 
@@ -128,7 +133,7 @@ public class SearchFrag extends Fragment implements WSCallsUtilsTaskCaller
     {
         if(query != null && !query.equals(""))
         {
-            WSCallsUtils.get(this, StringUtils.CHUCKNORRIS_PROD_URL + "/jokes/search?query=" + query, REQ_CODE_SEARCH);
+            WSCallsUtils.get(this, StringUtils.CHUCKNORRIS_URL + "/jokes/search?query=" + query, REQ_CODE_SEARCH);
         }else
         {
             GeneralUtils.makeToast(getContext(), "Please enter a word to search.");
@@ -195,7 +200,9 @@ public class SearchFrag extends Fragment implements WSCallsUtilsTaskCaller
             imgBtnFavourite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    GeneralUtils.makeToast(getContext(), "Added to favourites: " + jokes.get(position).getValue());
+                    GeneralUtils.makeToast(getContext(), "Added to favourites");
+                    Joke joke = jokes.get(position);
+                    sqLiteUtils.cacheFavourites(joke.getValue(), joke.getUrl(), joke.getUpdatedAt(), joke.getId(), joke.getUrlIcon(), joke.getCreatedAt());
                 }
             });
 

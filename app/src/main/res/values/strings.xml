@@ -9,8 +9,11 @@
     <string name="updated_at">Updated At:</string>
     <string name="url">URL:</string>
     <string name="categories">Categories:</string>
-    <string name="search">Search</string>
+    <string name="search_jokes">Search Jokes</string>
     <string name="value">Value</string>
     <string name="id">id</string>
+    <string name="id_joke">ID:</string>
+    <string name="loading">Loading</string>
+    <string name="favourites">Favourites</string>
 
 </resources>

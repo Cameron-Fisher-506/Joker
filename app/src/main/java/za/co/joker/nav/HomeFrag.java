@@ -78,7 +78,7 @@ public class HomeFrag extends Fragment implements WSCallsUtilsTaskCaller
     {
         for(int i = 0; i < 10; i++)
         {
-            WSCallsUtils.get(this, StringUtils.CHUCKNORRIS_PROD_URL + "/jokes/random", REQ_CODE_GET_RANDOM_JOKE);
+            WSCallsUtils.get(this, StringUtils.CHUCKNORRIS_URL + "/jokes/random", REQ_CODE_GET_RANDOM_JOKE);
         }
     }
 
